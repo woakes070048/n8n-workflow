@@ -1,0 +1,69 @@
+{
+  "name": "(TOOL) Agendar Horário",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "af02cd4c-6b6d-4394-8f6d-9867626a1adc",
+      "name": "Execute Workflow Trigger"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "addept.ia@gmail.com",
+          "mode": "list",
+          "cachedResultName": "addept.ia@gmail.com"
+        },
+        "start": "={{ $json[\"query\"][\"startTime\"] }}",
+        "end": "={{ $json[\"query\"][\"endTime\"] }}",
+        "additionalFields": {
+          "summary": "Reunião"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "bfa7691b-03d2-4ccd-8bc6-b5325faea3ef",
+      "name": "Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "XO1to94fQMy5kdpZ",
+          "name": "Google Calendar Addept"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "457cf1f4-7bb5-4195-adce-bfb76fa7505a",
+  "meta": {
+    "instanceId": "7f5e4758ea7327aa5e1f467ad119bd12acd82f5f7b112e6cbaeccab48f3abb68"
+  },
+  "id": "edfVu0jnZHQmiPUh",
+  "tags": []
+}

@@ -1,0 +1,190 @@
+{
+  "name": "(TOOL) Verificar Disponibilidade",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e5f010fd-0706-4d6c-9caa-4fd649b334fa",
+      "name": "Execute Workflow Trigger"
+    },
+    {
+      "parameters": {
+        "resource": "calendar",
+        "calendar": {
+          "__rl": true,
+          "value": "addept.ia@gmail.com",
+          "mode": "list",
+          "cachedResultName": "addept.ia@gmail.com"
+        },
+        "timeMin": "={{ $json[\"query\"][\"startTime\"] }}",
+        "timeMax": "={{ $json[\"query\"][\"endTime\"] }}",
+        "options": {
+          "outputFormat": "bookedSlots",
+          "timezone": {
+            "__rl": true,
+            "value": "America/Sao_Paulo",
+            "mode": "list",
+            "cachedResultName": "America/Sao_Paulo"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "2d088d72-fe20-4880-876e-71565c2e2024",
+      "name": "Google Calendar",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "XO1to94fQMy5kdpZ",
+          "name": "Google Calendar Addept"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "aaa1a5b5-586e-48e4-85ff-3efc7f4559d9",
+              "name": "horariosOcupados",
+              "value": "={{ $json.start }} - {{ $json.end }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        440,
+        0
+      ],
+      "id": "816f0580-e26a-463b-92cc-e3d3a52dd821",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "horariosOcupados"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        660,
+        0
+      ],
+      "id": "494b8770-e948-490f-bc36-6348f87e15e3",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini-2024-07-18",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI-2024-07-18"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=# Tarefa:\nAnalise os horários ocupados e retorne uma lista contendo os horários disponíveis para agendamento, sendo que nosso horário de funcionamento é das 08 às 12, e das 13 às 17. Não adicione contexto ou informações adicionais na sua resposta.\n\n## Exemplo de Resposta:\nHorários disponíveis para agendamento:\n08:00 - 09:00\n09:00 - 10:00\n13:00 - 14:00\n\n## Lista de horários ocupados:\n{{ $json.horariosOcupados }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.7,
+      "position": [
+        880,
+        0
+      ],
+      "id": "bbdfacaf-e653-4edc-9c75-d2e71ed509e6",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "pbuTjs7ym2c2arJS",
+          "name": "Demo YouTube"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5f8fd9b0-4b7c-4c17-9f01-7001be9413c8",
+  "meta": {
+    "instanceId": "7f5e4758ea7327aa5e1f467ad119bd12acd82f5f7b112e6cbaeccab48f3abb68"
+  },
+  "id": "C5DmE2ofShi1Ruxp",
+  "tags": []
+}

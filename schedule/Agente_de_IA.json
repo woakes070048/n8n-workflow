@@ -1,0 +1,531 @@
+{
+  "name": "Agente de IA",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c24c6409-f822-4f31-8661-11c5de31eb0c",
+      "name": "When chat message received",
+      "webhookId": "e841dd40-3f93-4892-8ccc-c7dc5e8b8839"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "# Identidade:  \nVocê é um especialista virtual em energia solar, altamente capacitado para fornecer suporte técnico, educacional e comercial sobre sistemas fotovoltaicos. Seu principal objetivo é incentivar leads a agendarem uma reunião com a empresa para entender melhor como a energia solar pode beneficiá-los.  \n\n# Tarefa:  \nSeu atendimento deve ser educativo, consultivo e persuasivo, destacando os benefícios da energia solar e guiando o lead para agendar uma reunião com um especialista.  \n\n- Passo 1: Engaje o lead respondendo suas dúvidas de forma clara, objetiva e confiável. Mostre autoridade no assunto e destaque os benefícios da energia solar.  \n- Passo 2: Assim que o lead demonstrar interesse ou enviar 3 mensagens, sugira diretamente uma reunião para que ele tenha um atendimento personalizado e possa esclarecer todas as dúvidas de forma mais completa.  \n- Passo 3: Pergunte qual dia ele prefere para a reunião. Utilize a ferramenta \"verificarAgenda\" para checar a disponibilidade de horários no dia escolhido. \n- Passo 4: Apresente ao lead os horários disponíveis e peça que ele escolha o melhor horário para a reunião.  \n- Passo 5: Assim que o lead escolher o horário, utilize a ferramenta \"agendarHorario\" para confirmar a reunião.  \n- Passo 6: Confirme o agendamento, agradeça o lead e reforce que a reunião será uma excelente oportunidade para ele entender melhor como a energia solar pode trazer economia e vantagens para seu caso específico.  "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        220,
+        0
+      ],
+      "id": "b8116986-fcf0-45c0-87e3-128fafd3bda9",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-2024-11-20",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        200
+      ],
+      "id": "d5b0a5a7-e60f-4762-9695-a929e26b01af",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "pbuTjs7ym2c2arJS",
+          "name": "Demo YouTube"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        40,
+        200
+      ],
+      "id": "d96f62e2-29cc-43c3-9a24-8a5af1e01fc3",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "W6ZmIWrn8C87Ercn",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "conhecimentoEnergiaSolar",
+        "description": "Use essa tool para retornar informações sobre energia solar, desde questões de funcionamento, até benefícios e preço."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        160,
+        200
+      ],
+      "id": "56bcd83a-bf6c-4322-8d21-42f381c35fc9",
+      "name": "Vector Store Tool"
+    },
+    {
+      "parameters": {
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        380
+      ],
+      "id": "b68d57a3-e39a-4313-b732-fec230e5b005",
+      "name": "Supabase Vector Store",
+      "credentials": {
+        "supabaseApi": {
+          "id": "irqGCHpgpnQIZ1ny",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        340,
+        360
+      ],
+      "id": "3e061e91-20db-44cd-87e4-342eba615876",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "pbuTjs7ym2c2arJS",
+          "name": "Demo YouTube"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        580
+      ],
+      "id": "103a6b8d-8065-432e-82cc-d57ccc84a4fb",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "pbuTjs7ym2c2arJS",
+          "name": "Demo YouTube"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        860,
+        0
+      ],
+      "id": "b5bc9849-13b2-43da-adaf-ff779de6e9ea",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "Energia Solar",
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1080,
+        0
+      ],
+      "id": "813de6b3-e3a2-423e-b37e-c1fa4a20ce96",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "buBvcaXpIefbBrWU",
+          "name": "Google Drive Addept"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1300,
+        0
+      ],
+      "id": "cdc93729-66b1-423e-9079-2e78d1f046f5",
+      "name": "Google Drive1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "buBvcaXpIefbBrWU",
+          "name": "Google Drive Addept"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        0
+      ],
+      "id": "86d0a923-76e2-4fe1-8d8d-0235dd0193a0",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        0
+      ],
+      "id": "f4b555d2-8f75-4a2e-82b7-7460719e04a3",
+      "name": "Supabase Vector Store1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "irqGCHpgpnQIZ1ny",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.1,
+      "position": [
+        1700,
+        220
+      ],
+      "id": "828777b3-43ad-47c3-9475-f310bd3300e6",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "pbuTjs7ym2c2arJS",
+          "name": "Demo YouTube"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        220
+      ],
+      "id": "8f89f540-5ee4-4c0a-a257-1c00fadf35d6",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "chunkOverlap": 100,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1960,
+        440
+      ],
+      "id": "7ef154b5-e7a2-45c7-9d8d-a00828deba09",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "name": "verificarAgenda",
+        "description": "=Use essa tool para verificar a disponibilidade de horários para agendamento no dia escolhido pelo lead.\n\nA data solicitada pelo lead será atribuída à variável \"startTime\", representando o início do dia às 00:00 no formato UTC, e à variável \"endTime\", representando o final do dia às 23:59 também no formato UTC.\n\nNessa tool em específico, você sempre utiliza as datas em formato e horário UTC.\n\nA data de hoje é {{ $now }}.",
+        "workflowId": {
+          "__rl": true,
+          "value": "C5DmE2ofShi1Ruxp",
+          "mode": "list",
+          "cachedResultName": "Verificar Disponibilidade"
+        },
+        "specifyInputSchema": true,
+        "jsonSchemaExample": "{\n  \"startTime\": \"{startTime}\", \n  \"endTime\": \"{endTime}\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        460,
+        200
+      ],
+      "id": "f1100936-eb3c-4404-81ed-bf1591318235",
+      "name": "Call n8n Workflow Tool"
+    },
+    {
+      "parameters": {
+        "name": "agendarHorario",
+        "description": "Use essa tool para agendar o horário escolhido pelo usuário.\n\nA variável {startTime} refere-se à hora escolhida pelo usuário em formato UTC e no fuso horário de São Paulo, representa o início do evento. Por exemplo, se o horário escolhido pelo lead foi as 09 da manhã: 2025-12-16T09:00:00-03:00\n\nA variável {endTime} representa o fim do evento, é igual à variável {startTime} porém com uma hora a mais já que o evento tem uma hora de duração. Por exemplo, se o horário escolhido pelo lead foi as 09 da manhã: 2025-12-16T10:00:00-03:00",
+        "workflowId": {
+          "__rl": true,
+          "value": "edfVu0jnZHQmiPUh",
+          "mode": "list",
+          "cachedResultName": "Agendar Horário"
+        },
+        "specifyInputSchema": true,
+        "jsonSchemaExample": "{\n\t\"startTime\": \"{startTime}\",\n    \"endTime\": \"{endTime}\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        580,
+        200
+      ],
+      "id": "c14fb193-4b4c-4e32-b694-3523ff58de24",
+      "name": "Call n8n Workflow Tool1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Google Drive1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive1": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call n8n Workflow Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call n8n Workflow Tool1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "73a1a6d2-f0ce-457b-9f82-c30140b884b9",
+  "meta": {
+    "instanceId": "7f5e4758ea7327aa5e1f467ad119bd12acd82f5f7b112e6cbaeccab48f3abb68"
+  },
+  "id": "NYmnqdEhRwzpUdNT",
+  "tags": []
+}
