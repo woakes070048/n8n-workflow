@@ -1,0 +1,188 @@
+{
+  "name": "[TEMPLATE AGENDAMENTOS] - CRIAR AGENDAMENTO - CAL.COM",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.cal.com/v2/slots/reserve",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "SUA API"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "slotUtcStartDate",
+              "value": "={{ $json.startTime }}"
+            },
+            {
+              "name": "slotUtcEndDate",
+              "value": "={{ $json.endTime }}"
+            },
+            {
+              "name": "eventTypeId",
+              "value": "SEU ID"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e10a0836-be7c-4fba-9c5c-4b7a4fd5e077",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1120,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4252280e-e638-40b1-b4b6-4e4bb0a0dbac",
+              "name": "time",
+              "value": "={{ $json.body.dia }} {{ $json.body.hora }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "352b3d22-b7d9-405a-9b95-faa3cab74e6b",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        680,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "07ba55c0-66bf-4e20-9399-4339ccc60a30",
+              "name": "startTime",
+              "value": "={{ $json.time.toDateTime().toUTC() }}",
+              "type": "string"
+            },
+            {
+              "id": "3f63dd7a-93f6-4427-acea-2492b52da8c2",
+              "name": "endTime",
+              "value": "={{ $json.time.toDateTime().toUTC().plus(30, 'min') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "941b5774-8d80-480a-8810-4a86617cf2b4",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        900,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.status }}",
+        "options": {}
+      },
+      "id": "bc40d77b-0139-4bf0-8cde-f9fc51f27057",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1340,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "e1e99c17-3b51-45da-b4f3-6c7edd1a2f16",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "70f199eb-faa5-4ce4-a348-b388344a4587",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        460,
+        400
+      ],
+      "webhookId": "e1e99c17-3b51-45da-b4f3-6c7edd1a2f16"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "72a1d0ed-17a4-4af3-a09e-84183f4b4bd9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "18988e6b4f42af40aca85a1163391e48c93f3b0236839a2cfb30e918dffc1c42"
+  },
+  "id": "ZiCfegi7o3ABnAhP",
+  "tags": []
+}

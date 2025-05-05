@@ -1,0 +1,526 @@
+{
+  "name": "DEMO YT - RAG AI AGENT",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d5728df1-388a-4b1c-8557-8471394b4237",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        1420,
+        580
+      ],
+      "webhookId": "a1b8ac76-841d-4412-911a-7f22ff0d73ff"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "77e0fd2d-4642-4e1f-b6a7-4f798ed23e94",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        1600,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "5080f896-8a08-4c3f-af7d-05acbc5dc9c6",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        1620,
+        760
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "CfjMrCPaJ4ePMvhx",
+          "name": "rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "5d5c27cb-d412-4eda-a27e-2035199a2b17",
+      "name": "Postgres Chat Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        1720,
+        760
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "U0v7byUsKRJjurjC",
+          "name": "N8n AI Agent - 28/11/24 (Demo YT)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "consultarCarros",
+        "description": "use essa tool quando o usuário desejar consultar um filtro de ar associado a um modelo de carro da planilha."
+      },
+      "id": "2eff013d-375c-4513-b442-e19a0f710dfd",
+      "name": "Vector Store Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "00368b4f-19dc-460d-ade5-1970480120df",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        2080,
+        860
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "CfjMrCPaJ4ePMvhx",
+          "name": "rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "6d559d3f-7487-4a97-956d-63de5968bf09",
+      "name": "Embeddings OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.1,
+      "position": [
+        1700,
+        880
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "CfjMrCPaJ4ePMvhx",
+          "name": "rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1y3L1DjRCFP51b0BSA69X-cfHwvmaSNFG",
+          "mode": "list",
+          "cachedResultName": "demo yt - 28/11/24",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1y3L1DjRCFP51b0BSA69X-cfHwvmaSNFG"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "id": "19502703-5ad1-4a01-b51e-ff53dcef5ba9",
+      "name": "Google Drive Trigger",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        2220,
+        560
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "SOMwjzsou4xIBT6R",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1b9ce002-32a7-4f00-9eb5-e84c621bbd1e",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a4c80602-e257-4f98-807d-222ed8d5d2a3",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2400,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "tableId": "documents",
+        "filterType": "string",
+        "filterString": "=metadata->>file_id=like.*{{ $json.id }}*"
+      },
+      "id": "c24c2fa9-9264-44cd-a8ef-726d5fc578db",
+      "name": "Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2580,
+        560
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "zZRilZ0dkKrDnocn",
+          "name": "Demo YT - 28/11/24"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Edit Fields').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "text/plain"
+            }
+          }
+        }
+      },
+      "id": "d012c8a9-a7aa-496c-a9ae-7f408c0b73af",
+      "name": "Google Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2740,
+        560
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "SOMwjzsou4xIBT6R",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "id": "092426b7-81e6-4c34-bf5e-1762e14bd2f7",
+      "name": "Extract from File",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "0d7662e6-8c22-45a3-9246-56570294ec82",
+      "name": "Embeddings OpenAI1",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.1,
+      "position": [
+        2400,
+        900
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "CfjMrCPaJ4ePMvhx",
+          "name": "rodrigo"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "4f015b6d-0512-47b8-ac57-4829083ff24f",
+      "name": "Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        2520,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "chunkOverlap": 100,
+        "options": {}
+      },
+      "id": "6750caf7-3c0c-4ca3-9bd2-ce1b2d01e3e8",
+      "name": "Recursive Character Text Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        2540,
+        1000
+      ]
+    },
+    {
+      "parameters": {
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "id": "d094bcc3-6124-4d1b-bb75-6f1b6c662a70",
+      "name": "Supabase Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        880
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zZRilZ0dkKrDnocn",
+          "name": "Demo YT - 28/11/24"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "id": "922f3be0-4284-4309-a76a-bd5bd70ef0d8",
+      "name": "Supabase Vector Store1",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        2420,
+        740
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zZRilZ0dkKrDnocn",
+          "name": "Demo YT - 28/11/24"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "afdd56e1-4019-4414-a6c5-f95bf880b635",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d044d10e3dd98e12036b03dc7645b7dadc61c65fc5c8088042be674da0b807d8"
+  },
+  "id": "4jsdg3e83E5O0BLO",
+  "tags": []
+}

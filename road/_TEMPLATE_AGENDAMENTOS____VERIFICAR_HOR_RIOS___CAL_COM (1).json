@@ -1,0 +1,501 @@
+{
+  "name": "[TEMPLATE AGENDAMENTOS] - VERIFICAR HORÁRIOS - CAL.COM",
+  "nodes": [
+    {
+      "parameters": {
+        "fieldToSplitOut": "data.slots",
+        "options": {
+          "destinationFieldName": "time"
+        }
+      },
+      "id": "ec5d5a0c-d8f7-4e06-8320-1357327af268",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "time"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "34fcde86-bb50-44db-8da2-3a1be092da7f",
+      "name": "Aggregate",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.cal.com/v2/slots/available?startTime={{ $json.starTime }}&endTime={{ $json.endTime }}&eventTypeId=seuID",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "SUA API"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9b18c6a5-0321-4ab7-a201-2e60d1c6e7ec",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        960,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.time }}",
+        "options": {}
+      },
+      "id": "2928239d-1088-4e94-bd4a-e9a72f447df6",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2080,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "95db05ee-73fb-4c98-ba94-657e283f9027",
+              "name": "starTime",
+              "value": "={{ DateTime.fromFormat($json.body.dia, 'dd/MM/yyyy', { zone: 'America/Sao_Paulo' }).toFormat('yyyy-MM-dd') }}",
+              "type": "string"
+            },
+            {
+              "id": "047988c6-27b6-45a7-b035-382946a699f2",
+              "name": "endTime",
+              "value": "={{ DateTime.fromFormat($json.body.dia, 'dd/MM/yyyy', { zone: 'America/Sao_Paulo' }).plus(1, 'days').toFormat('yyyy-MM-dd') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3d5dba00-a8c8-4875-a266-07ad789084d6",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        460,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e91e6477-dd11-47b1-a102-179c1c0cb5f7",
+              "name": "time",
+              "value": "={{ $json.time.toDateTime().setZone('America/Sao_Paulo').format('HH:mm') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e93359fc-0e98-4104-8a84-5ac62e756e5a",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1620,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "time",
+        "options": {}
+      },
+      "id": "5079cf6d-f2a9-47b5-b7ae-2018b90bf6b1",
+      "name": "Split Out1",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data.slots",
+        "options": {
+          "destinationFieldName": "time"
+        }
+      },
+      "id": "714745d6-fc19-4db2-b033-4063764ecf41",
+      "name": "Split Out2",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "time"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c8f99e6a-bea0-4b92-a570-21660d838a2f",
+      "name": "Aggregate1",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.cal.com/v2/slots/available?startTime={{ $json.starTime }}&endTime={{ $json.endTime }}&eventTypeId=seuID",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "SUA API"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7efa29d2-101a-41f3-9518-b9112ececfe4",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        960,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.time }}",
+        "options": {}
+      },
+      "id": "0dff2c0e-dbc9-47b0-8cc9-a3280169886d",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2080,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e91e6477-dd11-47b1-a102-179c1c0cb5f7",
+              "name": "time",
+              "value": "={{ $json.time.toDateTime().setZone('America/Sao_Paulo').format('HH:mm') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fab7f0da-92a7-4c72-9c79-e02040a7ea28",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1620,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "time",
+        "options": {}
+      },
+      "id": "5b09ee44-72bc-4953-b624-9584feddfffb",
+      "name": "Split Out3",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "36fda6ff-65aa-46ac-8b7b-44e7bf89b4c7",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "73cbc523-8586-4e08-ab70-79f9ec5479d1",
+      "name": "Webhook1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        280
+      ],
+      "webhookId": "36fda6ff-65aa-46ac-8b7b-44e7bf89b4c7"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook1').item.json.body.servico }}",
+                    "rightValue": "Clareamento Dental",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "clareamento"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d6f4c56e-181c-41f1-93f2-96ca4f53b9b7",
+                    "leftValue": "={{ $('Webhook1').item.json.body.servico }}",
+                    "rightValue": "=Implante Dentário",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "implante"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f3741f2d-c561-4fd9-b684-6a01ef0ef421",
+      "name": "Switch1",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        720,
+        280
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out2": {
+      "main": [
+        [
+          {
+            "node": "Split Out3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split Out2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "68559957-0452-4bf8-bb41-f53b19b7783d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "18988e6b4f42af40aca85a1163391e48c93f3b0236839a2cfb30e918dffc1c42"
+  },
+  "id": "C6L6HPpkxpWpfswT",
+  "tags": []
+}
