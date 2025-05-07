@@ -1,0 +1,2353 @@
+{
+  "name": "🤖 Automação Checkout Kiwify",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "kiwify",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -100,
+        60
+      ],
+      "id": "6762d642-8f94-4815-9ea2-ef6333ef6b81",
+      "name": "Webhook",
+      "webhookId": "abe3603a-7192-4ca4-9205-d65fcf479cb9"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "62cd5ebe-903e-4c3a-806f-afd6bab8df9d",
+              "name": "body.payment_method",
+              "value": "={{ $json.body.payment_method }}",
+              "type": "string"
+            },
+            {
+              "id": "fbd3f234-c115-4c46-bd58-27f0a9d59941",
+              "name": "body.pix_code",
+              "value": "={{ $json.body.pix_code }}",
+              "type": "string"
+            },
+            {
+              "id": "0b860063-8ec5-40d3-8973-0220c6987885",
+              "name": "body.pix_expiration",
+              "value": "={{ $json.body.pix_expiration }}",
+              "type": "string"
+            },
+            {
+              "id": "7db544f9-4837-4e5b-863a-801fe0a478bc",
+              "name": "body.webhook_event_type",
+              "value": "={{ $json.body.webhook_event_type }}",
+              "type": "string"
+            },
+            {
+              "id": "48da497f-2592-4d3d-a5c9-c8d76d9e4faa",
+              "name": "body.Customer.first_name",
+              "value": "={{ $json.body.Customer.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "056ce464-4890-42d1-9c73-53eceef6a091",
+              "name": "body.Customer.email",
+              "value": "={{ $json.body.Customer.email }}",
+              "type": "string"
+            },
+            {
+              "id": "643d2031-33ba-452e-a63b-f8c7b3456644",
+              "name": "body.Customer.mobile",
+              "value": "={{ $json.body.Customer.mobile }}",
+              "type": "string"
+            },
+            {
+              "id": "de8df55d-f891-49b7-a3d3-adbb2420b07d",
+              "name": "body.Customer.CPF",
+              "value": "={{ $json.body.Customer.CPF }}",
+              "type": "string"
+            },
+            {
+              "id": "7cb9bfdf-9f23-45a9-80bf-b4abe48087b4",
+              "name": "instancia",
+              "value": "n8nlabz",
+              "type": "string"
+            },
+            {
+              "id": "521d9799-992a-45c8-b158-9d28ea554580",
+              "name": "produtor",
+              "value": "5519996621711",
+              "type": "string"
+            },
+            {
+              "id": "b4842a3c-ca42-41a5-a305-1bd0ed82a17a",
+              "name": "body.Product.product_name",
+              "value": "={{ $json.body.Product.product_name }}",
+              "type": "string"
+            },
+            {
+              "id": "73a417ab-4d01-44e5-a3e3-8743d54a81c3",
+              "name": "body.Commissions.product_base_price",
+              "value": "={{ $json.body.Commissions.product_base_price }}",
+              "type": "number"
+            },
+            {
+              "id": "009a53a1-587e-4b3d-aa5f-e5bee6da32bb",
+              "name": "body.name",
+              "value": "={{ $json.body.name }}",
+              "type": "string"
+            },
+            {
+              "id": "9f7f40ee-0dcd-4a0e-9c2f-58f72c5b076c",
+              "name": "body.product_name",
+              "value": "={{ $json.body.product_name }}",
+              "type": "string"
+            },
+            {
+              "id": "4cd7da52-4fc1-4968-86bf-1263cee10892",
+              "name": "body.status",
+              "value": "={{ $json.body.status }}",
+              "type": "string"
+            },
+            {
+              "id": "45d9fd95-576f-464e-b302-ce285dcef5c3",
+              "name": "body.phone",
+              "value": "={{ $json.body.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "2c219b49-172e-4a88-8524-d7acdf8f31a2",
+              "name": "body.email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "6df33b9c-5b4b-4e40-978b-53f9701bbf4e",
+              "name": "body.status",
+              "value": "={{ $json.body.status }}",
+              "type": "string"
+            },
+            {
+              "id": "4e13c1ba-02a7-4018-a167-d9947358fdef",
+              "name": "body.Commissions.kiwify_fee",
+              "value": "={{ $json.body.Commissions.kiwify_fee }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        60,
+        60
+      ],
+      "id": "4c20c700-5d08-45d4-b704-4eaac8a84406",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        220,
+        60
+      ],
+      "id": "7457c64f-0688-4d2c-bb23-e5e008fcbd2d",
+      "name": "Wait",
+      "webhookId": "d6899f52-e988-4b5e-b804-b5cb860f3cc2"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Edit Fields').item.json.body.webhook_event_type }}",
+                    "rightValue": "pix_created",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Pix Gerado"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "8d87bbed-bf5e-4c2e-b290-29109727cd33",
+                    "leftValue": "={{ $('Edit Fields').item.json.body.webhook_event_type }}",
+                    "rightValue": "order_approved",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Compra Aprovada"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "03980dfe-7d0d-4573-8c7c-52f76fd1edd3",
+                    "leftValue": "={{ $('Edit Fields').item.json.body.status }}",
+                    "rightValue": "abandoned",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Carrinho Abandonado"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "7bf20745-bdca-4ea2-9776-c17f2226dcf5",
+                    "leftValue": "={{ $('Edit Fields').item.json.body.webhook_event_type }}",
+                    "rightValue": "order_rejected",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Compra Recusada"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "606183f0-4851-449c-a28a-11d9c5e081c4",
+                    "leftValue": "={{ $('Edit Fields').item.json.body.webhook_event_type }}",
+                    "rightValue": "order_refunded",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Reembolso"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        380,
+        20
+      ],
+      "id": "9fb2da72-becc-43a9-b7b5-82f2b3722738",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E",
+          "mode": "list",
+          "cachedResultName": "Kiwify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Pix Gerado",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nome": "={{ $('Edit Fields').item.json.body.Customer.first_name }}",
+            "Telefone": "={{ $('Edit Fields').item.json.body.Customer.mobile }}",
+            "E-mail": "={{ $('Edit Fields').item.json.body.Customer.email }}",
+            "Produto": "={{ $('Edit Fields').item.json.body.Product.product_name }}",
+            "Valor": "={{ `R$ ${(parseInt($('Edit Fields').item.json.body.Commissions.product_base_price) / 100).toFixed(2).replace('.', ',')}` }}",
+            "Data": "={{ $now.format('dd/MM/yyyy') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Data",
+              "displayName": "Data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "E-mail",
+              "displayName": "E-mail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Produto",
+              "displayName": "Produto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Valor",
+              "displayName": "Valor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        820,
+        -780
+      ],
+      "id": "8dac57ae-f30b-436a-859a-aa3aefc4383c",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XcSRnuZHmQygqoON",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtenha o valor do campo\nconst productBasePrice = $json.body.Commissions.product_base_price;\n\n// Certifique-se de que o valor é numérico\nif (!isNaN(productBasePrice)) {\n    // Converte para número e formata com duas casas decimais\n    const formattedPrice = `R$ ${parseFloat(productBasePrice).toFixed(2).replace('.', ',')}`;\n    \n    // Retorna o valor formatado\n    return {\n        formattedPrice\n    };\n} else {\n    // Retorna erro caso o valor não seja numérico\n    throw new Error(\"O valor fornecido não é um número válido.\");\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        -780
+      ],
+      "id": "bbeb058a-b80d-4304-84ab-2f563584d035",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1000,
+        -780
+      ],
+      "id": "7fe00a00-8a7f-4e72-b7b4-cbaca2675197",
+      "name": "Wait1",
+      "webhookId": "9be335af-5bc2-49fe-be2c-95fad7d2012b"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}",
+        "messageText": "={{ `${new Date().getHours() < 12 ? 'Bom dia' : new Date().getHours() < 18 ? 'Boa tarde' : 'Boa noite'} ${$('Edit Fields').item.json.body.Customer.first_name}` }}, tudo bem?\n\nVi aqui que você acabou de gerar um Pix para o *{{ $('Edit Fields').item.json.body.Product.product_name }}*.",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        -780
+      ],
+      "id": "965913bf-9271-4c6d-9308-600ecd1afc13",
+      "name": "Evolution API",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.produtor }}",
+        "messageText": "=⚠️ERROR⚠️\n\nPix Criado na Kiwify do produto: *{{ $('Edit Fields').item.json.body.Product.product_name }}*.   \nComprador: *{{ $('Edit Fields').item.json.body.Customer.first_name }}*\nWhatsapp: *wa.me/{{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}*\nE-mail: *{{ $('Edit Fields').item.json.body.Customer.email }}*\n\n> Entre em contato com o cliente.",
+        "options_message": {
+          "linkPreview": false
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        -680
+      ],
+      "id": "04eb9b87-4605-476c-9416-3b58fccfd812",
+      "name": "Evolution API1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}",
+        "messageText": "=Segue abaixo o pix copia e cola, é só copiar o código abaixo e colocar no seu banco e confirmar o pagamento.",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        -880
+      ],
+      "id": "4ae6c673-c83a-4686-94cb-6f8cf10197f7",
+      "name": "Evolution API2",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}",
+        "messageText": "=🔴 Informativo:\n\nPix criado na Kiwify do produto: *{{ $('Edit Fields').item.json.body.Product.product_name }}*.\n\nComprador: *{{ $('Edit Fields').item.json.body.Customer.first_name }}*\n\nWhatsapp: *wa.me/{{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}*\n\nE-mail: *{{ $('Edit Fields').item.json.body.Customer.email }}*\n\n🟢 Mensagem Automática Enviada 🟢",
+        "options_message": {
+          "delay": 2500,
+          "linkPreview": false
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        -880
+      ],
+      "id": "7b5d6b8d-222a-4dc3-9466-3f4c6cfdf3c5",
+      "name": "Evolution API7",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "=n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}",
+        "messageText": "={{ $('Edit Fields').item.json.body.pix_code }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        -880
+      ],
+      "id": "967e9ff7-42ba-4855-93e6-df892c352b5a",
+      "name": "Evolution API3",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "operation": "send-image",
+        "instanceName": "=n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}",
+        "media": "https://i.postimg.cc/HxSwtGxy/UBF8j-Ey-Gh1-Kdk-Sea-Nts-dhw0-ZFI6-EF9-G7g.png",
+        "caption": "Este é um exemplo de como pagar o Pix copia e cola.",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        -880
+      ],
+      "id": "99a82421-7529-4ef7-8809-5e914cb8b52f",
+      "name": "Evolution API4",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.body.Customer.mobile }}",
+        "messageText": "=Faaala {{ $('Edit Fields').item.json.body.Customer.first_name }}!!\n\nUhuul! Sua compra do *{{ $('Edit Fields').item.json.body.Product.product_name }}* foi aprovada! 🎉\n\n Mal posso esperar para ver você colocando a mão na massa e criando suas próprias automações!\n\nTe mandei um e-mail em *{{ $('Edit Fields').item.json.body.Customer.email }}* para você conseguir acessar nossa área de membros e iniciar os estudos. \n\nSe você tiver alguma dúvida sobre algum fluxo, ou qualquer coisa, é só me avisar, ok? 👊",
+        "options_message": {
+          "linkPreview": false
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        -380
+      ],
+      "id": "d70113b3-6433-42fd-92d0-edf0680ad8f6",
+      "name": "Evolution API5",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtenha o valor do campo\nconst productBasePrice = $json.body.Commissions.product_base_price;\n\n// Certifique-se de que o valor é numérico\nif (!isNaN(productBasePrice)) {\n    // Converte para número e formata com duas casas decimais\n    const formattedPrice = `R$ ${parseFloat(productBasePrice).toFixed(2).replace('.', ',')}`;\n    \n    // Retorna o valor formatado\n    return {\n        formattedPrice\n    };\n} else {\n    // Retorna erro caso o valor não seja numérico\n    throw new Error(\"O valor fornecido não é um número válido.\");\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        -380
+      ],
+      "id": "cc8ef193-8f26-425e-a25e-10f41164a697",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E",
+          "mode": "list",
+          "cachedResultName": "Kiwify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1314358274,
+          "mode": "list",
+          "cachedResultName": "Compra Aprovada",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E/edit#gid=1314358274"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nome": "={{ $('Edit Fields').item.json.body.Customer.first_name }}",
+            "Telefone": "={{ $('Edit Fields').item.json.body.Customer.mobile }}",
+            "E-mail": "={{ $('Edit Fields').item.json.body.Customer.email }}",
+            "Produto": "={{ $('Edit Fields').item.json.body.Product.product_name }}",
+            "Valor": "={{ `R$ ${(parseInt($('Edit Fields').item.json.body.Commissions.product_base_price) / 100).toFixed(2).replace('.', ',')}` }}",
+            "Comissão Kiwify": "={{ `R$ ${(parseInt($('Edit Fields').item.json.body.Commissions.kiwify_fee) / 100).toFixed(2).replace('.', ',')}` }}",
+            "Data da Compra": "={{(() => {\n  const approvedDate = new Date($('Webhook').item.json.body.approved_date);\n  const day = String(approvedDate.getDate()).padStart(2, '0');\n  const month = String(approvedDate.getMonth() + 1).padStart(2, '0'); // Os meses começam do 0\n  const year = approvedDate.getFullYear();\n  return `${day}/${month}/${year}`;\n})()}}",
+            "Data do Envio": "={{(() => {\n  const approvedDate = new Date($('Webhook').item.json.body.approved_date);\n  approvedDate.setDate(approvedDate.getDate() + 3); // Adiciona 3 dias\n  const day = String(approvedDate.getDate()).padStart(2, '0');\n  const month = String(approvedDate.getMonth() + 1).padStart(2, '0'); // Os meses começam do 0\n  const year = approvedDate.getFullYear();\n  return `${day}/${month}/${year}`;\n})()}}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Data da Compra",
+              "displayName": "Data da Compra",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Data do Envio",
+              "displayName": "Data do Envio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "E-mail",
+              "displayName": "E-mail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Produto",
+              "displayName": "Produto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Valor",
+              "displayName": "Valor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Comissão Kiwify",
+              "displayName": "Comissão Kiwify",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        820,
+        -380
+      ],
+      "id": "ef9f3d76-e043-461c-8478-efdd75786ff5",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XcSRnuZHmQygqoON",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        980,
+        -380
+      ],
+      "id": "8242a886-36ed-4303-a530-31194c97937b",
+      "name": "Wait2",
+      "webhookId": "278d15d1-df66-46eb-bdf8-a65c19a60ea4"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.produtor }}",
+        "messageText": "=⚠️ERROR⚠️\n\n*Compra Aprovada* na Kiwify do produto: *{{ $('Edit Fields').item.json.body.Product.product_name }}*.   \nComprador: *{{ $('Edit Fields').item.json.body.Customer.first_name }}*\nWhatsapp: *wa.me/{{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}*\nE-mail: *{{ $('Edit Fields').item.json.body.Customer.email }}*\n\n> Entre em contato com o cliente.",
+        "options_message": {
+          "linkPreview": false
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        -300
+      ],
+      "id": "4b5e1a3c-77a3-4922-9f26-f8788e7f08b7",
+      "name": "Evolution API6",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}",
+        "messageText": "=🔴 Informativo:\n\nCompra Efetuada na Kiwify do produto: *{{ $('Edit Fields').item.json.body.Product.product_name }}*.\n\nComprador: *{{ $('Edit Fields').item.json.body.Customer.first_name }}*\n\nWhatsapp: *wa.me/{{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}*\n\nE-mail: *{{ $('Edit Fields').item.json.body.Customer.email }}*\n\n🟢 Mensagem Automática Enviada 🟢",
+        "options_message": {
+          "delay": 2500,
+          "linkPreview": false
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        -460
+      ],
+      "id": "7108c0e1-1ae2-40a3-be36-d49d64831bc5",
+      "name": "Evolution API8",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.body.phone }}",
+        "messageText": "={{ `${new Date().getHours() < 12 ? 'Bom dia' : new Date().getHours() < 18 ? 'Boa tarde' : 'Boa noite'} ${$('Edit Fields').item.json.body.name}` }}, tudo bem?\n\nVi que você abandonou o nosso carrinho do produto *{{ $('Edit Fields').item.json.body.product_name }}*.\n\nFicou alguma dúvida? \n\nPode me dizer aqui que eu te ajudo 👇 ",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        20
+      ],
+      "id": "554fa111-c090-4d46-941a-083b96ade1e8",
+      "name": "Evolution API9",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtenha o valor do campo\nconst productBasePrice = $json.body.Commissions.product_base_price;\n\n// Certifique-se de que o valor é numérico\nif (!isNaN(productBasePrice)) {\n    // Converte para número e formata com duas casas decimais\n    const formattedPrice = `R$ ${parseFloat(productBasePrice).toFixed(2).replace('.', ',')}`;\n    \n    // Retorna o valor formatado\n    return {\n        formattedPrice\n    };\n} else {\n    // Retorna erro caso o valor não seja numérico\n    throw new Error(\"O valor fornecido não é um número válido.\");\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        20
+      ],
+      "id": "dab6d717-fc63-434e-8cab-e90b131eb7ce",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E",
+          "mode": "list",
+          "cachedResultName": "Kiwify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1411409031,
+          "mode": "list",
+          "cachedResultName": "Carrinho Abandonado",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E/edit#gid=1411409031"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nome": "={{ $('Edit Fields').item.json.body.name }}",
+            "Data": "={{ $now.format('dd/MM/yyyy') }}",
+            "Telefone": "={{ $('Edit Fields').item.json.body.phone }}",
+            "E-mail": "={{ $('Edit Fields').item.json.body.email }}",
+            "Produto": "={{ $('Edit Fields').item.json.body.product_name }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Data",
+              "displayName": "Data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "E-mail",
+              "displayName": "E-mail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Produto",
+              "displayName": "Produto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        820,
+        20
+      ],
+      "id": "569ada49-7ccb-4f0a-9fc6-d736d361d011",
+      "name": "Google Sheets2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XcSRnuZHmQygqoON",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        980,
+        20
+      ],
+      "id": "e0f9c5e3-0b0e-4caf-b599-d3a89bd934f8",
+      "name": "Wait3",
+      "webhookId": "278d15d1-df66-46eb-bdf8-a65c19a60ea4"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.produtor }}",
+        "messageText": "=⚠️ERROR⚠️\n\n*Carrinho Abandonado* na Kiwify do produto: *{{ $('Edit Fields').item.json.body.Product.product_name }}*.   \nComprador: *{{ $('Edit Fields').item.json.body.Customer.first_name }}*\nWhatsapp: *wa.me/{{ `55${$('Edit Fields').item.json.body.phone.replace(/[() -]/g, '')}` }}*\nE-mail: *{{ $('Edit Fields').item.json.body.Customer.email }}*\n\n> Entre em contato com o cliente.",
+        "options_message": {
+          "linkPreview": false
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        100
+      ],
+      "id": "e1b9595c-7a15-4c78-b71c-7667ad83e827",
+      "name": "Evolution API10",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.produtor }}",
+        "messageText": "=🔴 Informativo:\n\nCarrinho Abandonado na Kiwify do produto: *{{ $('Edit Fields').item.json.body.product_name }}*.\n\nComprador: *{{ $('Edit Fields').item.json.body.name }}*\n\nWhatsapp: *wa.me/{{ `55${$('Edit Fields').item.json.body.phone.replace(/[() -]/g, '')}` }}*\n\nE-mail: *{{ $('Edit Fields').item.json.body.email }}*\n\n🟢 Mensagem Automática Enviada 🟢",
+        "options_message": {
+          "delay": 2500,
+          "linkPreview": false
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        -60
+      ],
+      "id": "f89ff57b-e5f0-4cdb-b481-0c539e653c7e",
+      "name": "Evolution API11",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.body.Customer.mobile }}",
+        "messageText": "=Oi, {{ `${new Date().getHours() < 12 ? 'bom dia' : new Date().getHours() < 18 ? 'boa tarde' : 'boa noite'} ${$('Edit Fields').item.json.body.Customer.first_name}` }}, tudo bem?\n\nVi que tentou fazer a compra do *{{ $('Edit Fields').item.json.body.Product.product_name }}*, mas foi _recusada_ 😧.\n\nÀs vezes é só um detalhe do cartão ou do método de pagamento.\n\n*Você precisa de alguma ajuda?*",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        420
+      ],
+      "id": "392ada7f-238c-411b-846f-b215ae277c1c",
+      "name": "Evolution API12",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtenha o valor do campo\nconst productBasePrice = $json.body.Commissions.product_base_price;\n\n// Certifique-se de que o valor é numérico\nif (!isNaN(productBasePrice)) {\n    // Converte para número e formata com duas casas decimais\n    const formattedPrice = `R$ ${parseFloat(productBasePrice).toFixed(2).replace('.', ',')}`;\n    \n    // Retorna o valor formatado\n    return {\n        formattedPrice\n    };\n} else {\n    // Retorna erro caso o valor não seja numérico\n    throw new Error(\"O valor fornecido não é um número válido.\");\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        420
+      ],
+      "id": "c1a22289-6cec-4056-a2ec-1dd6057f6887",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E",
+          "mode": "list",
+          "cachedResultName": "Kiwify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 669129372,
+          "mode": "list",
+          "cachedResultName": "Compra Recusada",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E/edit#gid=669129372"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Data": "={{ $now.format('dd/MM/yyyy') }}",
+            "Nome": "={{ $('Edit Fields').item.json.body.Customer.first_name }}",
+            "Telefone": "={{ $('Edit Fields').item.json.body.Customer.mobile }}",
+            "E-mail": "={{ $('Edit Fields').item.json.body.Customer.email }}",
+            "Produto": "={{ $('Edit Fields').item.json.body.Product.product_name }}",
+            "Valor": "={{ `R$ ${(parseInt($('Edit Fields').item.json.body.Commissions.product_base_price) / 100).toFixed(2).replace('.', ',')}` }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Data",
+              "displayName": "Data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "E-mail",
+              "displayName": "E-mail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Produto",
+              "displayName": "Produto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Valor",
+              "displayName": "Valor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        820,
+        420
+      ],
+      "id": "5a3df068-8d9d-4d9c-8688-cbd60890f8b1",
+      "name": "Google Sheets3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XcSRnuZHmQygqoON",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        980,
+        420
+      ],
+      "id": "22ac225e-9edf-4726-9b6e-b324c72a84eb",
+      "name": "Wait4",
+      "webhookId": "278d15d1-df66-46eb-bdf8-a65c19a60ea4"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.produtor }}",
+        "messageText": "=⚠️ERROR⚠️\n\n*Compra Recusada* na Kiwify do produto: *{{ $('Edit Fields').item.json.body.Product.product_name }}*.   \nComprador: *{{ $('Edit Fields').item.json.body.Customer.first_name }}*\nWhatsapp: *wa.me/{{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}*\nE-mail: *{{ $('Edit Fields').item.json.body.Customer.email }}*\n\n> Entre em contato com o cliente.",
+        "options_message": {
+          "linkPreview": false
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        500
+      ],
+      "id": "c10e84d9-2011-4f19-8a55-c3042d83d79d",
+      "name": "Evolution API13",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}",
+        "messageText": "=🔴 Informativo:\n\nCompra Recusada na Kiwify do produto: *{{ $('Edit Fields').item.json.body.Product.product_name }}*.\n\nComprador: *{{ $('Edit Fields').item.json.body.Customer.first_name }}*\n\nWhatsapp: *wa.me/{{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}*\n\nE-mail: *{{ $('Edit Fields').item.json.body.Customer.email }}*\n\n🟢 Mensagem Automática Enviada 🟢",
+        "options_message": {
+          "delay": 2500,
+          "linkPreview": false
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        340
+      ],
+      "id": "7b90421c-7672-4d03-9d05-81e0d1a12a46",
+      "name": "Evolution API14",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.body.Customer.mobile }}",
+        "messageText": "={{ `${new Date().getHours() < 12 ? 'Bom dia' : new Date().getHours() < 18 ? 'Boa tarde' : 'Boa noite'} ${$('Edit Fields').item.json.body.Customer.first_name}` }}, tudo joia? \n\nVi que solicitou o reembolso do {{ $('Edit Fields').item.json.body.Product.product_name }} 🥺.\n\nEntendemos sua decisão, mas não queremos que você perca a chance de aprender as automações do N8N.\n\nPoderia nos deixar um feedback sobre o motivo do reembolso? Queremos sempre melhorar!\n\nSe precisar de algo ou mudar de ideia, estamos aqui para ajudar. \n\nAté breve!",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        820
+      ],
+      "id": "5c9ce2a1-6141-4d62-b16b-6fbcac74e8fc",
+      "name": "Evolution API15",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E",
+          "mode": "list",
+          "cachedResultName": "Kiwify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 846415457,
+          "mode": "list",
+          "cachedResultName": "Reembolso",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E/edit#gid=846415457"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Data": "={{ $now.format('dd/MM/yyyy') }}",
+            "Nome": "={{ $('Edit Fields').item.json.body.Customer.first_name }}",
+            "Telefone": "={{ $('Edit Fields').item.json.body.Customer.mobile }}",
+            "E-mail": "={{ $('Edit Fields').item.json.body.Customer.email }}",
+            "Produto": "={{ $('Edit Fields').item.json.body.Product.product_name }}",
+            "Valor": "={{ `R$ ${(parseInt($('Edit Fields').item.json.body.Commissions.product_base_price) / 100).toFixed(2).replace('.', ',')}` }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Data",
+              "displayName": "Data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "E-mail",
+              "displayName": "E-mail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Produto",
+              "displayName": "Produto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Valor",
+              "displayName": "Valor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        820,
+        820
+      ],
+      "id": "4d9ddd29-7fcd-4c0a-a7b5-aedc905a5b31",
+      "name": "Google Sheets4",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XcSRnuZHmQygqoON",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        980,
+        820
+      ],
+      "id": "248d8f73-c46d-4654-8f8c-2669eafc5dad",
+      "name": "Wait5",
+      "webhookId": "278d15d1-df66-46eb-bdf8-a65c19a60ea4"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.produtor }}",
+        "messageText": "=⚠️ERROR⚠️\n\n*Reembolso* na Kiwify do produto: *{{ $('Edit Fields').item.json.body.Product.product_name }}*.   \nComprador: *{{ $('Edit Fields').item.json.body.Customer.first_name }}*\nWhatsapp: *wa.me/{{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}*\nE-mail: *{{ $('Edit Fields').item.json.body.Customer.email }}*\n\n> Entre em contato com o cliente.",
+        "options_message": {
+          "linkPreview": false
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        900
+      ],
+      "id": "64179b71-9f5c-4c38-aec0-37ae31ca1a2a",
+      "name": "Evolution API16",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}",
+        "messageText": "=🔴 Informativo:\n\nReembolso na Kiwify do produto: *{{ $('Edit Fields').item.json.body.Product.product_name }}*.\n\nComprador: *{{ $('Edit Fields').item.json.body.Customer.first_name }}*\n\nWhatsapp: *wa.me/{{ $('Edit Fields').item.json.body.Customer.mobile.replace('+', '') }}*\n\nE-mail: *{{ $('Edit Fields').item.json.body.Customer.email }}*\n\n🟢 Mensagem Automática Enviada 🟢",
+        "options_message": {
+          "delay": 2500,
+          "linkPreview": false
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        740
+      ],
+      "id": "9b67369b-2640-4e5e-8ab5-a744ec64ce08",
+      "name": "Evolution API17",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtenha o valor do campo\nconst productBasePrice = $json.body.Commissions.product_base_price;\n\n// Certifique-se de que o valor é numérico\nif (!isNaN(productBasePrice)) {\n    // Converte para número e formata com duas casas decimais\n    const formattedPrice = `R$ ${parseFloat(productBasePrice).toFixed(2).replace('.', ',')}`;\n    \n    // Retorna o valor formatado\n    return {\n        formattedPrice\n    };\n} else {\n    // Retorna erro caso o valor não seja numérico\n    throw new Error(\"O valor fornecido não é um número válido.\");\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        820
+      ],
+      "id": "e66025a7-5709-4d52-a184-d1b5f15aecd5",
+      "name": "Code4"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        1620,
+        -380
+      ],
+      "id": "b302524c-78c3-4619-97b2-86447a8aeb50",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1980,
+        -380
+      ],
+      "id": "c045ebf7-2840-4134-af6c-d07542194ca4",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.Nome }}\n{{ $json.Produto }}\n{{ $json.mensagem }}",
+        "options": {
+          "systemMessage": "Você é um profissional de pós venda e deve randomizar a mensagem de entrada mantendo  o nome e o produto para saber se o produto está sendo satisfatório.\nMe retorne apenas a mensagem para o cliente, sem adicionar nenhuma instrução"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        2340,
+        -380
+      ],
+      "id": "6d8904b3-23ee-4316-b275-6443c3769218",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E",
+          "mode": "list",
+          "cachedResultName": "Kiwify",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1314358274,
+          "mode": "list",
+          "cachedResultName": "Compra Aprovada",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1J-3UXzsqn-WwLAatanPlRQWGHiJdpUP1Mwa279iuT9E/edit#gid=1314358274"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Data do Envio",
+              "lookupValue": "={{(() => {\n  const timestamp = new Date($json.timestamp);\n  const day = String(timestamp.getDate()).padStart(2, '0');\n  const month = String(timestamp.getMonth() + 1).padStart(2, '0'); // Os meses começam do 0\n  const year = timestamp.getFullYear();\n  return `${day}/${month}/${year}`;\n})()}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1800,
+        -380
+      ],
+      "id": "9d3b7279-ab98-414f-81d5-eb8a187d4734",
+      "name": "Google Sheets5",
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XcSRnuZHmQygqoON",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d1ab2bbd-df43-4345-8ee7-ffe98a5b2163",
+              "name": "Nome",
+              "value": "={{ $json.Nome }}",
+              "type": "string"
+            },
+            {
+              "id": "d605acee-5ea1-4618-8e50-96878c54058e",
+              "name": "Telefone",
+              "value": "={{ $json.Telefone }}",
+              "type": "number"
+            },
+            {
+              "id": "6daf9f0a-02c5-4507-b877-942378d142fe",
+              "name": "Produto",
+              "value": "={{ $json.Produto }}",
+              "type": "string"
+            },
+            {
+              "id": "0a916019-72b4-4999-bfbd-d72d16dbae85",
+              "name": "mensagem",
+              "value": "Mensagem nao cliente",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2200,
+        -380
+      ],
+      "id": "4363b9e0-d0a7-4911-8cf2-dbd0afdf3025",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2820,
+        -380
+      ],
+      "id": "4ce8aaba-a9cf-4e50-bf74-43b9de520786",
+      "name": "Wait6",
+      "webhookId": "e918feca-9c08-4cd6-9cde-947240b8ebf2"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 400,
+        "width": 1400,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        620,
+        -920
+      ],
+      "id": "ec910b49-8b0c-4b30-a36b-a47f5d12aeef",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 380,
+        "width": 940,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        620,
+        -500
+      ],
+      "id": "2256516b-ae70-4196-834c-6492a57c6abc",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 380,
+        "width": 940,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        620,
+        -100
+      ],
+      "id": "4efeb3ad-fc80-4105-83de-1e775b18cb13",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 380,
+        "width": 940,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        620,
+        300
+      ],
+      "id": "2ca6bacc-e698-4917-a213-556ae1a38d85",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 380,
+        "width": 940,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        620,
+        700
+      ],
+      "id": "e1065271-bfd8-4bf4-a094-54dab7eeb3bd",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 380,
+        "width": 1400,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        -500
+      ],
+      "id": "81a949d9-44ed-40da-844f-ac3901bcc647",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "# Pix Gerado",
+        "height": 80,
+        "width": 220,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        660,
+        -900
+      ],
+      "id": "90b8be4f-92a2-44d4-9462-4fb360808c17",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "# Compra Aprovada",
+        "height": 80,
+        "width": 360,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        660,
+        -480
+      ],
+      "id": "53cadc59-dca8-4f79-b68d-32312fd0e5f2",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "# Carrinho Abandonado",
+        "height": 80,
+        "width": 420,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        660,
+        -80
+      ],
+      "id": "012a5982-07b1-441a-b3a6-a97c249859cf",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "# Compra Recusada",
+        "height": 80,
+        "width": 340,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        660,
+        320
+      ],
+      "id": "f3dce68f-6759-4ee2-ba0e-01c1b608c19b",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "# Reembolso",
+        "height": 80,
+        "width": 220,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        660,
+        720
+      ],
+      "id": "efbea6ef-1509-41d5-a6f1-a471e892d0a2",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "# Follow Up - 3 dias - Compra Aprovada",
+        "height": 80,
+        "width": 680,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        -480
+      ],
+      "id": "2b8d36c7-cf48-49d3-a7d0-89c9776d66a1",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 440,
+        "width": 380,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1580,
+        -100
+      ],
+      "typeVersion": 1,
+      "id": "a8a7fd2e-d856-4401-9a2e-048024af823e",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "## [Grupo de Networking](https://chat.whatsapp.com/EvigcSnVVim11D56QPSjPX)",
+        "height": 80,
+        "width": 323,
+        "color": 7
+      },
+      "id": "04f92576-8ee8-4123-9cfb-9434f7531ddb",
+      "name": "Sticky Note15",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Informações",
+        "height": 80,
+        "width": 243,
+        "color": 7
+      },
+      "id": "38870de6-9405-4c39-9676-46f2c00c0f9b",
+      "name": "Sticky Note16",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## N8N Versão 1.71.1\n## Evolution API 2.2.0",
+        "height": 100,
+        "width": 283,
+        "color": 7
+      },
+      "id": "20a003fa-6af1-4d1e-8c76-8abf9cf6695f",
+      "name": "Sticky Note17",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## [Acesse o canal no Youtube](https://www.youtube.com/@N8NLabz)",
+        "height": 80,
+        "width": 343,
+        "color": 7
+      },
+      "id": "e595050c-49ef-45d8-b718-ffdec16051dc",
+      "name": "Sticky Note13",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "content": "![N8N Labz](https://i.postimg.cc/nzFz2Bzd/N8N-Labz.png)",
+        "height": 437,
+        "width": 736,
+        "color": 3
+      },
+      "id": "d588cc4f-85ad-43ea-a2e8-8ba73bd0c3fb",
+      "name": "Sticky Note14",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1980,
+        -100
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        2320,
+        -220
+      ],
+      "id": "70ad72a1-3265-4f02-8d6a-cb58842693b9",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "avkAer18847AI3wj",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "n8nlabz",
+        "remoteJid": "={{`${$('Edit Fields1').item.json.Telefone}@s.whatsapp.net`}}",
+        "messageText": "={{ $json.output }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2660,
+        -380
+      ],
+      "id": "eca59be7-a6f0-4120-b86f-aaec2d458415",
+      "name": "Evolution API18",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hs1G7hp9WJIU0zXJ",
+          "name": "Evolution account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Evolution API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API": {
+      "main": [
+        [
+          {
+            "node": "Evolution API2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Evolution API1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API3": {
+      "main": [
+        [
+          {
+            "node": "Evolution API4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API2": {
+      "main": [
+        [
+          {
+            "node": "Evolution API3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API4": {
+      "main": [
+        [
+          {
+            "node": "Evolution API7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Evolution API5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API5": {
+      "main": [
+        [
+          {
+            "node": "Evolution API8",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Evolution API6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API9": {
+      "main": [
+        [
+          {
+            "node": "Evolution API11",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Evolution API10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets2": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Evolution API9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API12": {
+      "main": [
+        [
+          {
+            "node": "Evolution API14",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Evolution API13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets3": {
+      "main": [
+        [
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "Evolution API12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API15": {
+      "main": [
+        [
+          {
+            "node": "Evolution API17",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Evolution API16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets4": {
+      "main": [
+        [
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "Evolution API15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code4": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Evolution API18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets5": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait6": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API7": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API18": {
+      "main": [
+        [
+          {
+            "node": "Wait6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "11db6c54-09fc-4c32-a62a-5a86ca9febf5",
+  "meta": {
+    "instanceId": "dec85a4208452c2c96102373ab1cb6d4edabebb6f3896a7d5c2cd9bcdbd5ce6a"
+  },
+  "id": "Do1hwoIUIv3fxpbQ",
+  "tags": []
+}

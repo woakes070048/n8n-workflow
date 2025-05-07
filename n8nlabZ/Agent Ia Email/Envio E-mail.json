@@ -1,0 +1,401 @@
+{
+  "name": "Envio e-mail",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# Informações",
+        "height": 80,
+        "width": 243,
+        "color": 7
+      },
+      "id": "c09c9c81-a1fe-40f3-8c3a-18924f186813",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        -420
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## N8N Versão 1.71.1",
+        "height": 80,
+        "width": 283,
+        "color": 7
+      },
+      "id": "cfe0b367-2a75-4023-8d58-fdfa3dcf3e07",
+      "name": "Sticky Note9",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## [Grupo de Networking](https://chat.whatsapp.com/EvigcSnVVim11D56QPSjPX)",
+        "height": 80,
+        "width": 323,
+        "color": 7
+      },
+      "id": "42d4ce28-d836-40a1-a808-b455e8b85d2b",
+      "name": "Sticky Note11",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        -220
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## [Acesse o canal no Youtube](https://www.youtube.com/@N8NLabz)",
+        "height": 80,
+        "width": 343,
+        "color": 7
+      },
+      "id": "95db4e5d-8f95-415f-b59f-6164d3d8f06e",
+      "name": "Sticky Note13",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "content": "![N8N Labz](https://i.postimg.cc/nzFz2Bzd/N8N-Labz.png)",
+        "height": 437,
+        "width": 736,
+        "color": 3
+      },
+      "id": "e9ea9f6f-8cd7-4791-8eb8-0a8436b741b6",
+      "name": "Sticky Note14",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1700,
+        -440
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        -380
+      ],
+      "id": "10d70111-f38c-4eda-aa77-6a5e8c907200",
+      "name": "When chat message received",
+      "webhookId": "17b959a3-8afd-466f-bcbb-e64f14825ca3"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=<persona>\n    <description>Assistente pessoal automatizado</description>\n    <objective>\n        Enviar e-mails informais e personalizados, baseando-se na tabela do Supabase, garantindo a aprovação do usuário antes do envio. Após o envio, registrar o e-mail enviado em uma planilha do Google Sheets. Responder de forma direta e concisa.\n    </objective>\n</persona>\n\n<instructions>\n    <conversation>\n        <description>Responder de forma amigável e direta em conversas normais.</description>\n        <example>\n            <user>Olá!</user>\n            <assistant>Oi! Como posso te ajudar?</assistant>\n        </example>\n    </conversation>\n    <email_task>\n        <description>\n            Quando o usuário solicitar explicitamente o envio de um e-mail, o assistente deve:\n        </description>\n        <steps>\n            <step>\n                <number>1</number>\n                <description>Identificar a intenção do usuário com base em palavras-chave como \"envie e-mail\", \"meu irmão\", etc.</description>\n            </step>\n            <step>\n                <number>2</number>\n                <description>Buscar os dados necessários na tabela do Supabase (campos: nome, apelido e e-mail).</description>\n            </step>\n            <step>\n                <number>3</number>\n                <description>Gerar o conteúdo do e-mail com um tom informal e direto.</description>\n                <example>\n                    <email>\n                        <to>{{EMAIL}}</to>\n                        <subject>Oi!</subject>\n                        <body>Fala, {{NOME}}! Tudo certo? Só tô passando pra saber como você tá. Me avisa qualquer coisa!</body>\n                    </email>\n                </example>\n            </step>\n            <step>\n                <number>4</number>\n                <description>Enviar ao usuário uma prévia do e-mail gerado para aprovação.</description>\n                <example>\n                    <preview>\n                        <to>{{EMAIL}}</to>\n                        <subject>Oi!</subject>\n                        <body>Fala, {{NOME}}! Tudo certo? Só tô passando pra saber como você tá. Me avisa qualquer coisa!</body>\n                    </preview>\n                    <approval_request>Quer enviar esse e-mail?</approval_request>\n                </example>\n            </step>\n            <step>\n                <number>5</number>\n                <description>Enviar o e-mail somente após a aprovação do usuário.</description>\n            </step>\n            <step>\n                <number>6</number>\n                <description>Registrar os dados do e-mail enviado em uma planilha do Google Sheets.</description>\n                <example>\n                    <google_sheets_entry>\n                        <row>\n                            <field name=\"Destinatário\">{{EMAIL}}</field>\n                            <field name=\"Nome\">{{NOME}}</field>\n                            <field name=\"Apelido\">{{APELIDO}}</field>\n                            <field name=\"Assunto\">Oi!</field>\n                            <field name=\"Corpo do E-mail\">Fala, {{NOME}}! Tudo certo? Só tô passando pra saber como você tá. Me avisa qualquer coisa!</field>\n                            <field name=\"Data de Envio\">{{DATA_ENVIO}}</field>\n                        </row>\n                    </google_sheets_entry>\n                </example>\n            </step>\n            <step>\n                <number>7</number>\n                <description>Informar o usuário de forma direta que o e-mail foi enviado e registrado na planilha.</description>\n                <example>\n                    <confirmation>E-mail enviado para {{EMAIL}} e registrado na planilha.</confirmation>\n                </example>\n            </step>\n        </steps>\n    </email_task>\n</instructions>\n\n<restrictions>\n    <restriction>Não enviar e-mails sem aprovação do usuário.</restriction>\n    <restriction>Registrar todos os e-mails enviados na planilha do Google Sheets após o envio.</restriction>\n    <restriction>Responder de forma concisa, sem explicar ações tomadas.</restriction>\n</restrictions>\n\n<important_points>\n    <point>Respostas devem ser diretas e claras, sem explicações desnecessárias.</point>\n    <point>O e-mail deve ter um tom informal, de acordo com o contexto solicitado.</point>\n    <point>Registrar todos os e-mails enviados na planilha do Google Sheets, incluindo informações como destinatário, assunto e data de envio.</point>\n</important_points>\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        860,
+        -380
+      ],
+      "id": "0efc6d7d-9504-4e1c-87d7-7344aa17cc7d",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        660,
+        -160
+      ],
+      "id": "abad53e3-9952-4552-9c3c-aad0054608df",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "avkAer18847AI3wj",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.2,
+      "position": [
+        500,
+        -160
+      ],
+      "id": "f982f0fe-9b31-42d5-ab0a-55c63b50fce3",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "QLggRZmxS6G4Ch9x",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DELETE FROM n8n_chat_histories;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        420,
+        -380
+      ],
+      "id": "7098cc1f-980f-458a-899c-384509dc61fa",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "VDxdRmhAyi7Wn6zf",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Chame essa tool para buscar os e-mails pelo nome ou apelido. ",
+        "operation": "getAll",
+        "tableId": "emails",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        920,
+        -160
+      ],
+      "id": "0284a633-3ea2-4d3d-ac4f-d300f9fe97e9",
+      "name": "Supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "BlQluV6PzOEcAc3G",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Chame essa tool para enviar e-mails",
+        "sendTo": "={{  $fromAI(\"email\") }}",
+        "subject": "={{ $fromAI(\"Titulo\",\"coloque aqui o titulo do email.\") }}",
+        "emailType": "text",
+        "message": "={{ $fromAI(\"texto\",\"coloque e-mail a ser enviado\") }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        1020,
+        -160
+      ],
+      "id": "af15a321-a242-4cb3-9232-1562887ce583",
+      "name": "Gmail",
+      "webhookId": "0f501431-3eb4-47d2-97bc-f02575e7c932",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "gnoy0AT6oyx3hqAI",
+          "name": "N8N Labz YT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use essa tool para gravar o envio de e-mail após a confirmação.",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "142yZBYsqnwkAQSXRZhg9s-H0gHwxAugtJVna1LpEGvM",
+          "mode": "list",
+          "cachedResultName": "Emails",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/142yZBYsqnwkAQSXRZhg9s-H0gHwxAugtJVna1LpEGvM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/142yZBYsqnwkAQSXRZhg9s-H0gHwxAugtJVna1LpEGvM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Data": "={{ $now.format('dd/MM/yyyy') }}",
+            "Destinatário ": "={{ $fromAI(\"email\") }}",
+            "Mensagem": "={{ $fromAI(\"texto\",\"coloque e-mail a ser enviado\") }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Data",
+              "displayName": "Data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Destinatário ",
+              "displayName": "Destinatário ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Mensagem",
+              "displayName": "Mensagem",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.5,
+      "position": [
+        1160,
+        -160
+      ],
+      "id": "527af921-def4-4afb-bbc3-860848f519b0",
+      "name": "sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1A9te91IIQbcZMe8",
+          "name": "N8N Labz YT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        800,
+        -160
+      ],
+      "id": "e13d7096-02fd-458b-8375-5af23363fe4a",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "VDxdRmhAyi7Wn6zf",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Supabase": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "abc405a0-86eb-45bf-963d-d4de4e011fb3",
+  "meta": {
+    "instanceId": "dec85a4208452c2c96102373ab1cb6d4edabebb6f3896a7d5c2cd9bcdbd5ce6a"
+  },
+  "id": "p4KREL8HsiezVBau",
+  "tags": []
+}
