@@ -1,0 +1,484 @@
+{
+  "name": "Micro-SaaS | Analista de Vendas",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "index",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a6f583b6-428b-4b32-8c0b-5b5430a97fe1",
+      "name": "Serve Frontend",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        80,
+        -120
+      ],
+      "webhookPath": "frontend",
+      "method": "GET",
+      "responseMode": "onReceived",
+      "responseData": {
+        "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Análise de Conversas</title>\n  <style>\n    body {\n      font-family: Arial, sans-serif;\n      margin: 0;\n      padding: 20px;\n      display: flex;\n      flex-direction: column;\n      align-items: center;\n      justify-content: center;\n      height: 100vh;\n    }\n    .container {\n      max-width: 400px;\n      width: 100%;\n      text-align: center;\n    }\n    textarea {\n      width: 100%;\n      height: 150px;\n      margin-bottom: 10px;\n    }\n    button {\n      background-color: #45DE71;\n      border: none;\n      padding: 10px 15px;\n      color: white;\n      cursor: pointer;\n      border-radius: 5px;\n    }\n    button:disabled {\n      background-color: #ccc;\n    }\n    #result {\n      margin-top: 20px;\n      white-space: pre-wrap;\n      text-align: left;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <h1>Análise de Conversas</h1>\n    <textarea id=\"conversation\" placeholder=\"Cole a conversa aqui...\"></textarea>\n    <button id=\"analyzeButton\">Analisar Conversa</button>\n    <div id=\"result\"></div>\n  </div>\n\n  <script>\n    const analyzeButton = document.getElementById('analyzeButton');\n    const conversationInput = document.getElementById('conversation');\n    const resultDiv = document.getElementById('result');\n\n    analyzeButton.addEventListener('click', async () => {\n      const conversation = conversationInput.value.trim();\n      if (!conversation) {\n        alert('Por favor, insira uma conversa para análise.');\n        return;\n      }\n\n      analyzeButton.disabled = true;\n      resultDiv.textContent = 'Analisando...';\n\n      try {\n        const response = await fetch('/webhook/process', {\n          method: 'POST',\n          headers: {\n            'Content-Type': 'application/json',\n          },\n          body: JSON.stringify({ conversation }),\n        });\n\n        if (!response.ok) {\n          throw new Error('Erro ao analisar a conversa.');\n        }\n\n        const result = await response.json();\n        resultDiv.textContent = `Resultado da Análise:\\n\\n${result.analysis}`;\n      } catch (error) {\n        resultDiv.textContent = 'Erro: Não foi possível analisar a conversa.';\n      } finally {\n        analyzeButton.disabled = false;\n      }\n    });\n  </script>\n</body>\n</html>"
+      },
+      "responseHeaders": [
+        {
+          "name": "Content-Type",
+          "value": "text/html"
+        }
+      ],
+      "webhookId": "18c4a0d9-b4fd-48ea-a3ec-02eca69abfbb"
+    },
+    {
+      "parameters": {
+        "html": "<!DOCTYPE html>\n<html lang=\"pt-br\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Análise de Conversas</title>\n  <!-- Link para a fonte Grotesk -->\n  <link href=\"https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap\" rel=\"stylesheet\">\n  <style>\n    body {\n      font-family: 'Space Grotesk', Arial, sans-serif; /* Fonte principal */\n      margin: 0;\n      padding: 0;\n      display: flex;\n      flex-direction: column;\n      align-items: center;\n      justify-content: center;\n      height: 100vh;\n      background-color: #121212; /* Cor de fundo escura */\n      color: #ffffff; /* Texto branco */\n    }\n    .popup {\n      position: fixed;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n      background: rgba(0, 0, 0, 0.8);\n      display: flex;\n      justify-content: center;\n      align-items: center;\n    }\n    .popup-content {\n      display: flex;\n      background: #1e1e1e;\n      padding: 20px;\n      border-radius: 8px;\n      width: 300px;\n      text-align: center;\n      color: #ffffff;\n      flex-direction: column;\n      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);\n    }\n    h1, h3 {\n      font-weight: 600; /* Pesos da fonte para títulos */\n      margin-bottom: 20px;\n    }\n    input, textarea {\n      padding: 10px;\n      margin-bottom: 10px;\n      border: 1px solid #444; /* Bordas escuras */\n      border-radius: 4px;\n      background-color: #1e1e1e; /* Fundo escuro */\n      color: #ffffff; /* Texto branco */\n      font-family: 'Space Grotesk', Arial, sans-serif;\n    }\n    button {\n      width: 100%;\n      padding: 10px;\n      background-color: #45DE71; /* Botão verde */\n      border: none;\n      color: #121212;\n      border-radius: 4px;\n      cursor: pointer;\n      font-weight: 600; /* Peso intermediário */\n      transition: background-color 0.3s ease;\n    }\n    button:disabled {\n      background-color: #444; /* Botão desativado */\n      cursor: not-allowed;\n    }\n    button:hover:enabled {\n      background-color: #36b659; /* Cor ao passar o mouse */\n    }\n    #contextArea, #fileInput {\n      width: 100%;\n      margin-bottom: 10px;\n    }\n    .container {\n      width: 80%;\n      max-width: 600px;\n      margin: 20px;\n      text-align: center;\n    }\n    #analysisResult {\n      background: #1e1e1e; /* Fundo escuro para resultado */\n      padding: 15px;\n      border-radius: 4px;\n      margin-top: 20px;\n      white-space: pre-wrap;\n      font-size: 14px;\n      line-height: 1.5;\n    }\n    #loginError {\n      color: #E83F4C; /* Vermelho para erros */\n      font-size: 14px;\n    }\n  </style>\n</head>\n<body>\n  <!-- Pop-up de Login -->\n  <div class=\"popup\" id=\"loginPopup\">\n    <div class=\"popup-content\">\n      <h3>Login</h3>\n      <input type=\"email\" id=\"email\" placeholder=\"E-mail\" required />\n      <input type=\"password\" id=\"password\" placeholder=\"Senha\" required />\n      <button id=\"loginButton\">Entrar</button>\n      <div id=\"loginError\" style=\"margin-top: 10px;\"></div>\n    </div>\n  </div>\n\n  <!-- Página Principal -->\n  <div class=\"container\">\n    <h1>Analista de Vendas</h1>\n    <textarea id=\"contextArea\" placeholder=\"Escreva o contexto para análise\"></textarea>\n    <input type=\"file\" id=\"fileInput\" accept=\".pdf, .txt, image/*\" multiple />\n    <button id=\"analyzeButton\">Analisar</button>\n    <div id=\"analysisResult\"></div>\n  </div>\n\n<script>\n  let userId = null; // ID do usuário após login\n\n  // Pop-up de Login\n  document.getElementById('loginButton').addEventListener('click', async () => {\n    const loginButton = document.getElementById('loginButton');\n    const email = document.getElementById('email').value;\n    const password = document.getElementById('password').value;\n\n    // Adicionar loading ao botão de login\n    loginButton.disabled = true;\n    loginButton.textContent = 'Entrando...';\n\n    try {\n      const response = await fetch('https://primary-production-affdf.up.railway.app/webhook-test/login', {\n        method: 'POST',\n        headers: { 'Content-Type': 'application/json' },\n        body: JSON.stringify({ email, password }),\n      });\n\n      const result = await response.json();\n\n      if (result.success) {\n        userId = result.userId; // Armazena o ID do usuário retornado\n        document.getElementById('loginPopup').style.display = 'none'; // Fecha o pop-up\n      } else {\n        document.getElementById('loginError').textContent = result.message || 'Login inválido.';\n      }\n    } catch (error) {\n      document.getElementById('loginError').textContent = 'Erro ao tentar fazer login.';\n    } finally {\n      loginButton.disabled = false;\n      loginButton.textContent = 'Entrar';\n    }\n  });\n\n  // Botão de Análise\n  document.getElementById('analyzeButton').addEventListener('click', async () => {\n    const analyzeButton = document.getElementById('analyzeButton');\n    const context = document.getElementById('contextArea').value;\n    const files = document.getElementById('fileInput').files;\n\n    if (!context || files.length === 0) {\n      alert('Por favor, preencha o contexto e selecione pelo menos um arquivo.');\n      return;\n    }\n\n    // Adicionar loading ao botão de análise\n    analyzeButton.disabled = true;\n    analyzeButton.textContent = 'Analisando...';\n\n    try {\n      // Criar FormData para envio\n      const formData = new FormData();\n      formData.append('userId', userId); // ID do usuário\n      formData.append('context', context); // Contexto diretamente no envio\n\n      for (const file of files) {\n        formData.append('files', file);\n      }\n\n      // Enviar para o webhook de análise\n      const response = await fetch('https://primary-production-affdf.up.railway.app/webhook-test/analyze', {\n        method: 'POST',\n        body: formData,\n      });\n\n      const result = await response.json();\n\n      // Analisar a resposta do servidor\n      if (result.success) {\n        // Exibe o resultado da análise\n        document.getElementById('analysisResult').textContent = result.analysis;\n      } else {\n        // Exibe o erro ao usuário\n        alert(result.message || 'Erro ao analisar os arquivos.');\n      }\n\n    } catch (error) {\n      alert('Ocorreu um erro ao processar a análise.');\n    } finally {\n      analyzeButton.disabled = false;\n      analyzeButton.textContent = 'Analisar';\n    }\n  });\n</script>\n\n</body>\n</html>"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        280,
+        -120
+      ],
+      "id": "c17f6ec2-4c58-48a7-987b-c8bb0ccf0bdc",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        460,
+        -120
+      ],
+      "id": "98235696-9b3b-4c6b-b828-f6a9e60eb00b",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "login",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        60,
+        200
+      ],
+      "id": "4b5a6175-591c-468c-a7ec-c63cd35f91da",
+      "name": "Webhook",
+      "webhookId": "b19c2770-c015-49ad-b8ff-11d133ba068b"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "User",
+        "returnAll": true,
+        "filterType": "none"
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        260,
+        200
+      ],
+      "id": "f849a240-62e1-458c-ad5b-d436b3f4854c",
+      "name": "Supabase",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "RIKAJHrMjG1ST6wH",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Login (User)",
+        "height": 320,
+        "width": 940,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        20,
+        120
+      ],
+      "id": "7afc80aa-a703-4652-ad85-42e5dded15da",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Tela Principal - Front",
+        "height": 280,
+        "width": 680,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        20,
+        -200
+      ],
+      "id": "9f1e167a-66c7-4994-8d5f-7f721ebba131",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Analista (Analysis)",
+        "height": 380,
+        "width": 1160,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        20,
+        480
+      ],
+      "id": "6c397ec4-c9f1-48a0-8f33-c2c202d6cd25",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d11134e2-5b77-4259-b65b-98f2d25500df",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "={{ $('Webhook').item.json.body.email }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "bb4a2f6b-da05-4603-abd2-36bc6f9b1c16",
+              "leftValue": "={{ $json.password }}",
+              "rightValue": "={{ $('Webhook').item.json.body.password }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        200
+      ],
+      "id": "1a342afa-8cdb-4345-8268-2dcda1cbd462",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"userId\": {{ $json.id }},\n  \"message\": \"Login realizado com sucesso\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        140
+      ],
+      "id": "1c6db180-b6f4-4c38-90c5-9be33d4a6f22",
+      "name": "Sucesso"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"success\": false,\n  \"message\": \"Credenciais inválidas\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        300
+      ],
+      "id": "c3f271d5-9a85-4e2d-a187-51ee9300a964",
+      "name": "Erro"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "binaryPropertyName": "files",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        260,
+        560
+      ],
+      "id": "aaef8972-b1bf-4f72-94d0-376364d11344",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "analyze",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        60,
+        560
+      ],
+      "id": "e39d4d4c-38b4-4bfd-8556-851c0dd7391b",
+      "name": "Webhook1",
+      "webhookId": "3349b5c0-be4e-432f-aa70-a42e405556a0"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7dda017c-4284-45d0-905a-b826bc9e8daf",
+              "leftValue": "={{$json.output}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        740,
+        560
+      ],
+      "id": "bbd60d6e-e803-48af-866e-8444e07adf42",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"analysis\": \"{{$json.output}}\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        940,
+        500
+      ],
+      "id": "16c1e81f-6e2b-47fb-98c3-9a615809f942",
+      "name": "Sucesso2"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"success\": false,\n  \"message\": \"Erro ao processar a análise. Verifique os arquivos enviados e tente novamente.\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        940,
+        680
+      ],
+      "id": "7d3268ba-2a0e-415f-9a28-068726a0c40e",
+      "name": "Erro2"
+    },
+    {
+      "parameters": {
+        "agent": "conversationalAgent",
+        "promptType": "define",
+        "text": "=## Contexto\n{{ $('Webhook1').item.json.body.context }}\n\n### Conteúdo\n{{ $json.data }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        420,
+        560
+      ],
+      "id": "08ca2eb9-18ec-4109-ba3a-13f1d2e4d849",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        400,
+        720
+      ],
+      "id": "73ae10fc-6fe0-4fb4-96ce-d063f532e445",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "H180T2Pua6vn0uh7",
+          "name": "OpenAi account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Serve Frontend": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        []
+      ]
+    },
+    "Supabase": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Sucesso",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Erro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Sucesso2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Erro2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "07ed143e-7753-4173-ad40-a452f8d06943",
+  "meta": {
+    "instanceId": "efa9d778e4d55b353f453b9d376d9a631f80672716f8065c1400485234f926dd"
+  },
+  "id": "x8cHILgixuzFon7B",
+  "tags": []
+}
